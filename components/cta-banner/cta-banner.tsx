@@ -14,8 +14,8 @@ import {
 
 import styles from "./cta-banner.module.css";
 
-/** Lead form hero: portrait with orange circle on dark (PNG) */
-const ctaPortraitSrc = "/images/cta/cta-banner-specialist-v3.png";
+/** Lead form hero: portrait with orange circle on white (Frame_4, no transparency processing) */
+const ctaPortraitSrc = "/images/cta/cta-lead-specialist-frame4.png";
 
 export function CtaBanner() {
   const {
@@ -164,6 +164,7 @@ export function CtaBanner() {
                 className={styles.portraitImg}
                 sizes="(max-width: 1023px) 0px, 486px"
                 priority={false}
+                unoptimized
               />
             </div>
           </div>

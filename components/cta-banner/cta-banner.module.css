@@ -271,7 +271,8 @@
 
   .portraitImg {
     object-fit: contain;
-    object-position: right center;
+    object-position: 86% center;
+    transform: translateX(-16px);
   }
 }
 
