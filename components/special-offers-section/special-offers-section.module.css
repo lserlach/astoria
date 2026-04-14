@@ -1,0 +1,80 @@
+.section {
+  padding-block: 0;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(22px, 2.5vw, 28px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.nav {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+.track {
+  display: flex;
+  gap: var(--space-5);
+  width: 100%;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  flex: 0 0 min(100%, calc((100% - 2 * var(--space-5)) / 3));
+  scroll-snap-align: start;
+  min-width: 0;
+  display: flex;
+}
+
+.trackFour .slide {
+  flex: 0 0 min(100%, calc((100% - 3 * var(--space-5)) / 4));
+}
+
+.slide > * {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+@media (max-width: 1023px) {
+  .head {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+
+  .nav {
+    justify-content: flex-end;
+  }
+
+  .slide {
+    flex: 0 0 min(300px, calc(100vw - 2 * var(--page-gutter) - var(--space-4)));
+    scroll-snap-align: center;
+  }
+
+  .trackFour .slide {
+    flex: 0 0 min(300px, calc(100vw - 2 * var(--page-gutter) - var(--space-4)));
+  }
+}

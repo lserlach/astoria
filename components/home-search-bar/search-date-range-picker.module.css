@@ -1,0 +1,352 @@
+/* Tourvisor-style range calendar in search bar */
+
+.pickerRoot {
+  position: relative;
+  padding: 0;
+  cursor: default;
+}
+
+.labelRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text-muted);
+}
+
+.trigger {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-1);
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: var(--space-4);
+  border: none;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.trigger:hover {
+  background-color: rgba(77, 163, 255, 0.07);
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+  z-index: 1;
+}
+
+.dateValue {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dateValuePlaceholder {
+  color: var(--color-text-hint);
+  font-weight: 500;
+}
+
+.valueRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.chevron {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: var(--color-text);
+  opacity: 0.55;
+  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.popover {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+  z-index: 50;
+  width: min(720px, calc(100vw - 32px));
+  max-width: none;
+  padding: var(--space-4);
+  background: var(--color-bg);
+  border: none;
+  border-radius: var(--radius-sm);
+}
+
+@media (min-width: 1024px) {
+  .popover {
+    width: 640px;
+  }
+}
+
+.popoverHeader {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.navMonth {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.navBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: rgba(37, 37, 37, 0.06);
+  color: var(--color-accent);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.navBtn:hover {
+  background: rgba(77, 163, 255, 0.14);
+}
+
+.monthLabel {
+  min-width: 140px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--color-text);
+}
+
+.months {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+@media (min-width: 640px) {
+  .months {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+}
+
+.monthBlock {
+  min-width: 0;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: var(--space-2);
+}
+
+.weekday {
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.dayBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2px;
+  min-height: 52px;
+  padding: 6px 2px 4px;
+  border: none;
+  border-radius: var(--radius-nested-sm-4);
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.dayBtn:hover:not(:disabled) {
+  background: rgba(77, 163, 255, 0.12);
+}
+
+.dayBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.dayBtnMuted {
+  opacity: 0.4;
+}
+
+.dayBtnMuted .dayNum,
+.dayBtnMuted .dayPriceRow,
+.dayBtnMuted .dayPriceText,
+.dayBtnMuted .dayPriceTextMuted,
+.dayBtnMuted .dayArrow {
+  color: var(--color-text-muted);
+}
+
+.dayNum {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--color-text);
+}
+
+.dayPriceRow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  max-width: 100%;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.dayPriceRowLow .dayPriceText,
+.dayPriceRowLow .dayArrow {
+  color: var(--color-accent);
+}
+
+.dayPriceRowHigh .dayPriceText,
+.dayPriceRowHigh .dayArrow {
+  color: var(--color-caution);
+}
+
+.dayPriceRowMid .dayPriceText {
+  color: rgba(37, 37, 37, 0.48);
+}
+
+.dayPriceText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.dayPriceTextMuted {
+  color: rgba(37, 37, 37, 0.35);
+}
+
+.dayArrow {
+  flex-shrink: 0;
+}
+
+.dayEndpoint {
+  background: rgba(77, 163, 255, 0.22);
+}
+
+.dayInRange {
+  background: rgba(77, 163, 255, 0.1);
+}
+
+.hint {
+  margin: var(--space-4) 0 0;
+  padding-top: var(--space-3);
+  border-top: 0.5px solid var(--color-border-subtle);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--color-text-hint);
+}
+
+@media (max-width: 1023px) {
+  .trigger {
+    box-sizing: border-box;
+    min-height: 80px;
+  }
+
+  .label {
+    font-size: 15px;
+    line-height: 22px;
+  }
+}
+
+.pickerInverse .labelRow svg {
+  color: rgba(245, 245, 245, 0.95);
+}
+
+.pickerInverse .label {
+  font-size: 18px;
+  line-height: normal;
+  letter-spacing: -0.01em;
+  color: rgba(245, 245, 245, 0.95);
+}
+
+.pickerInverse .dateValue {
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  color: var(--color-text-inverse);
+}
+
+.pickerInverse .dateValuePlaceholder {
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 500;
+}
+
+.pickerInverse .chevron {
+  color: var(--color-text-inverse);
+  opacity: 0.85;
+}
+
+.pickerInverse .trigger:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.pickerInverse .trigger:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  outline-offset: -2px;
+  z-index: 1;
+}
+
+@media (max-width: 1023px) {
+  .pickerInverse .label {
+    font-size: 15px;
+    line-height: 22px;
+  }
+
+  .pickerInverse .dateValue {
+    font-size: 16px;
+  }
+}

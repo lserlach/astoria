@@ -1,0 +1,67 @@
+/* Figma 322:13590 — section carousel prev/next: 48×48 white circles, gap 12px on parent .nav */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--color-accent);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    color 0.2s ease;
+}
+
+.btn:hover:not(:disabled) {
+  opacity: 1;
+  background: var(--color-card-hover);
+  box-shadow: 0 2px 12px rgba(37, 37, 37, 0.08);
+  transform: translateY(-1px);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(37, 37, 37, 0.06);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* White / off-white panel (e.g. minimum prices block): stronger icon contrast */
+.btnOnLight {
+  background: rgba(77, 163, 255, 0.14);
+  color: #2a7fd4;
+}
+
+.btnOnLight:hover:not(:disabled) {
+  opacity: 1;
+  background: rgba(77, 163, 255, 0.24);
+  box-shadow: 0 2px 10px rgba(77, 163, 255, 0.22);
+  transform: translateY(-1px);
+}
+
+.btnOnLight:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(77, 163, 255, 0.15);
+}
+
+.chevron {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}

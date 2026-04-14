@@ -1,0 +1,759 @@
+/* Figma 281:9980 — tour detail page */
+
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  /* Single rhythm between all major blocks + matching card padding */
+  --tour-block-gap: var(--space-5);
+  --tour-card-pad: var(--space-5);
+}
+
+.pageBlocks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tour-block-gap);
+  width: 100%;
+}
+
+.topBar {
+  padding-bottom: var(--space-4);
+}
+
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding-block: var(--space-1);
+  margin-bottom: var(--space-2);
+}
+
+.crumb {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.crumb:hover {
+  opacity: 0.75;
+}
+
+.crumbMuted {
+  font-weight: 400;
+  color: rgba(37, 37, 37, 0.8);
+  pointer-events: none;
+}
+
+.crumbCurrent {
+  font-weight: 400;
+  color: rgba(37, 37, 37, 0.6);
+  pointer-events: none;
+}
+
+.sep {
+  font-size: 18px;
+  color: var(--color-text-muted);
+  user-select: none;
+}
+
+.backRow {
+  margin-bottom: var(--space-6);
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-block: var(--space-1);
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(37, 37, 37, 0.6);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.backLink:hover {
+  color: var(--color-text);
+}
+
+.topGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--tour-block-gap);
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .topGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+  }
+}
+
+.topGrid > * {
+  min-width: 0;
+}
+
+.surfaceCard {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: var(--tour-card-pad);
+}
+
+.hotelTop {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
+  border-bottom: 0.5px solid var(--color-border);
+}
+
+.titleRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.hotelTitle {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.rating {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-pill);
+  background: var(--color-rating);
+  color: var(--color-text-inverse);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.stars {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.star {
+  color: var(--color-caution);
+}
+
+.locBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.locRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.locIcon {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--color-accent);
+}
+
+.locText {
+  font-size: 16px;
+  line-height: 1.35;
+  color: var(--color-text);
+}
+
+.mapLink {
+  font-size: 16px;
+  color: rgba(37, 37, 37, 0.8);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.mapLink:hover {
+  opacity: 0.85;
+}
+
+.flightStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tour-block-gap);
+}
+
+.flightDetailStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tour-block-gap);
+  width: 100%;
+}
+
+.flightCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: var(--tour-card-pad);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-sm);
+}
+
+.flightCardHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.flightIcon {
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+
+.flightIconReturn {
+  transform: rotate(-90deg);
+}
+
+.flightBody {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--space-2);
+  align-items: start;
+  min-height: 120px;
+}
+
+.flightCol {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.flightColEnd {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.airline {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.flightNo {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.airport {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.time {
+  margin: 0;
+  font-size: 18px;
+  color: rgba(37, 37, 37, 0.6);
+}
+
+.flightMid {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  align-self: center;
+}
+
+.flightLine {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(280px, 35vw);
+  height: 1px;
+  background: var(--color-border);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.flightPlane {
+  position: relative;
+  z-index: 1;
+  color: var(--color-accent);
+  background: var(--color-bg-secondary);
+}
+
+.flightPlaneReturn {
+  transform: scaleY(-1) rotate(180deg);
+}
+
+.bookingCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tour-block-gap);
+}
+
+.guarantee {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 16px;
+  font-weight: 500;
+  color: #007e05;
+}
+
+.guarantee svg {
+  flex-shrink: 0;
+}
+
+.bookingTitle {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.bookingMeta {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: rgba(37, 37, 37, 0.75);
+}
+
+.bookingDate {
+  margin: 0;
+  font-size: 18px;
+  color: var(--color-text);
+}
+
+.priceRows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.priceRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.priceLabel {
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(37, 37, 37, 0.6);
+}
+
+.priceValue {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.includedBox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: rgba(77, 163, 255, 0.06);
+}
+
+.includedTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: rgba(37, 37, 37, 0.6);
+}
+
+.includedList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.includedItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.includedCheck {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--color-accent);
+}
+
+.ctaBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: var(--space-2);
+}
+
+.orangePrice {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-caution);
+}
+
+.bookBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: var(--space-4);
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-caution);
+  color: var(--color-text-inverse);
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.bookBtn:hover {
+  opacity: 0.94;
+}
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tour-block-gap);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.galleryMain {
+  position: relative;
+  aspect-ratio: 1312 / 469;
+  max-height: 520px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: rgba(37, 37, 37, 0.06);
+}
+
+.galleryMainImg {
+  object-fit: cover;
+}
+
+.galleryNav {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3);
+  pointer-events: none;
+}
+
+.galleryNavBtn {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-text);
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.galleryNavBtn:hover {
+  opacity: 0.95;
+  transform: scale(1.04);
+}
+
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-3);
+  height: 169px;
+}
+
+@media (max-width: 900px) {
+  .thumbs {
+    grid-template-columns: repeat(3, 1fr);
+    height: auto;
+  }
+}
+
+.thumb {
+  position: relative;
+  border: none;
+  padding: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  cursor: pointer;
+  background: rgba(37, 37, 37, 0.08);
+  min-height: 80px;
+  transition: outline 0.15s ease, opacity 0.15s ease;
+}
+
+.thumb:hover {
+  opacity: 0.92;
+}
+
+.thumbActive {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.thumbImg {
+  object-fit: cover;
+}
+
+.leadSection {
+  margin-top: var(--tour-block-gap);
+  margin-bottom: var(--space-7);
+  padding-top: 0;
+}
+
+.sectionStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tour-block-gap);
+  width: 100%;
+}
+
+.sectionCard {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: var(--tour-card-pad);
+}
+
+.sectionHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.sectionIcon {
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.sectionProse {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.sectionProse + .sectionProse {
+  margin-top: var(--space-3);
+}
+
+.bulletList {
+  margin: 0;
+  padding-left: 1.35rem;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.bulletList li + li {
+  margin-top: var(--space-2);
+}
+
+.checkList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.checkItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.checkIcon {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--color-accent);
+}
+
+.kvRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: var(--space-4);
+}
+
+.kvRow:last-child {
+  margin-bottom: 0;
+}
+
+.kvLabel {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: rgba(37, 37, 37, 0.6);
+}
+
+.kvValue {
+  margin: 0;
+  font-size: 18px;
+  color: var(--color-text);
+}
+
+.mealIntro {
+  margin-bottom: var(--space-4);
+}
+
+.mealTypeLabel {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 500;
+  color: rgba(37, 37, 37, 0.8);
+}
+
+.mealName {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.mealDesc {
+  margin: 0;
+  font-size: 18px;
+  color: rgba(37, 37, 37, 0.6);
+}
+
+.mealGroup {
+  margin-top: var(--space-4);
+}
+
+.mealGroupTitle {
+  margin: 0 0 var(--space-2);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.mapWrap {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: rgba(37, 37, 37, 0.06);
+  aspect-ratio: 16 / 9;
+  max-height: 420px;
+}
+
+.mapFrame {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.noticeCard {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: var(--tour-card-pad);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-sm);
+}
+
+.noticeIcon {
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+
+.noticeText {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.45;
+  color: rgba(37, 37, 37, 0.75);
+}
+
+.seoWrap {
+  width: 100%;
+}
+
+.footerWrap {
+  margin-top: var(--tour-block-gap);
+  padding-inline: var(--page-gutter);
+  max-width: calc(var(--container-max) + 2 * var(--page-gutter));
+  margin-inline: auto;
+  width: 100%;
+}
+
+@media (max-width: 1023px) {
+  .flightBody {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .flightColEnd {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .flightMid {
+    display: none;
+  }
+}

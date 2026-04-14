@@ -1,0 +1,135 @@
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  padding-bottom: var(--space-4);
+}
+
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding-block: var(--space-1);
+  margin-bottom: var(--space-6);
+}
+
+.crumb {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.crumb:hover {
+  opacity: 0.75;
+}
+
+.crumbCurrent {
+  font-weight: 400;
+  color: rgba(37, 37, 37, 0.6);
+  pointer-events: none;
+}
+
+.sep {
+  display: inline-flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-text-muted);
+  user-select: none;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: min(420px, 52vw);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: var(--space-7);
+}
+
+.heroImage {
+  object-fit: cover;
+}
+
+.heroShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+  pointer-events: none;
+}
+
+.heroInner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-6);
+  gap: var(--space-3);
+}
+
+@media (max-width: 640px) {
+  .heroInner {
+    padding: var(--space-5);
+  }
+}
+
+.heroHeading {
+  margin: 0;
+  font-size: clamp(32px, 6vw, 56px);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: #fff;
+  text-shadow: 0 1px 24px rgba(0, 0, 0, 0.35);
+}
+
+.heroSubtitle {
+  margin: 0;
+  max-width: 48ch;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.3);
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  padding-top: var(--space-2);
+}
+
+.hotelBundle {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.showAllWrap {
+  display: flex;
+  justify-content: center;
+}
+
+.footerWrap {
+  margin-top: var(--space-7);
+  padding-inline: var(--page-gutter);
+  max-width: calc(var(--container-max) + 2 * var(--page-gutter));
+  margin-inline: auto;
+  width: 100%;
+}

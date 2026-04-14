@@ -1,0 +1,133 @@
+/* Hero block matches Figma node 322:13536 — 1312×340, radius 32, pad 48 */
+
+.hero {
+  width: 100%;
+  padding-bottom: var(--space-7);
+  background: var(--color-canvas);
+}
+
+.shell {
+  display: flex;
+  flex-direction: column;
+}
+
+.overlap {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.navSlot {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  /* ~Half of main nav pill (~66px) overlaps the hero image below */
+  margin-bottom: -33px;
+}
+
+@media (max-width: 1023px) {
+  .navSlot {
+    margin-bottom: 0;
+  }
+}
+
+.frame {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 260px;
+  border-radius: var(--radius-footer);
+  overflow: hidden;
+  border: none;
+}
+
+@media (min-width: 900px) {
+  .frame {
+    height: 340px;
+    min-height: 340px;
+  }
+}
+
+.frameImage {
+  object-fit: cover;
+}
+
+.frameOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.37) 0%,
+    rgba(0, 0, 0, 0.48) 100%
+  );
+}
+
+.frameContent {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-7);
+}
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+  color: var(--color-text-inverse);
+}
+
+.heroTitle {
+  margin: 0;
+  max-width: 22ch;
+  font-size: clamp(28px, 4.2vw, 54px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-text-inverse);
+}
+
+.heroSub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  font-size: clamp(16px, 2vw, 24px);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--color-text-inverse);
+}
+
+.heroSubLine {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  text-align: center;
+}
+
+@media (max-width: 1023px) {
+  .frameContent {
+    padding: var(--space-6) var(--space-3);
+  }
+
+  .heroText {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .heroTitle {
+    max-width: none;
+  }
+}

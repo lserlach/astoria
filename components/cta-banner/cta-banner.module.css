@@ -1,0 +1,315 @@
+/* Figma 322:13624 — заявка специалисту + контакты */
+
+.section {
+  padding-block: 0;
+}
+
+.block {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-footer);
+  background: var(--color-bg);
+  border: none;
+  padding: var(--space-6);
+}
+
+.main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  max-width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .block {
+    min-height: 520px;
+    padding-block: var(--space-6);
+    padding-inline: var(--space-6);
+    padding-right: min(42%, 420px);
+  }
+
+  .main {
+    max-width: 720px;
+  }
+}
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(24px, 3.2vw, 32px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.form {
+  display: block;
+  width: 100%;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 400px;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  min-width: 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  min-width: 0;
+}
+
+.label {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.input {
+  width: 100%;
+  height: 46px;
+  padding: var(--space-3);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: rgba(37, 37, 37, 0.045);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  box-shadow: none;
+  transition: background-color 0.15s ease;
+}
+
+.input::placeholder {
+  color: rgba(37, 37, 37, 0.55);
+}
+
+.input:hover {
+  background: rgba(37, 37, 37, 0.065);
+}
+
+.input:focus,
+.input:focus-visible {
+  outline: none;
+  background: rgba(37, 37, 37, 0.08);
+}
+
+.fieldError {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-caution);
+}
+
+.submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 46px;
+  padding: 0 var(--space-5);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-caution);
+  color: var(--color-text-inverse);
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.submit:hover {
+  opacity: 0.92;
+}
+
+.submit:focus-visible {
+  outline: 2px solid var(--color-caution);
+  outline-offset: 3px;
+}
+
+.contactSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: flex-start;
+  margin-top: var(--space-6);
+}
+
+.contactLead {
+  margin: 0;
+  font-size: clamp(20px, 2.2vw, 24px);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.contacts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.contactRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.contactRow:hover {
+  opacity: 0.85;
+}
+
+.contactIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+}
+
+.contactIconGlyph {
+  color: var(--color-text-inverse);
+}
+
+.contactText {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.chatLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) 0;
+  border: none;
+  border-bottom: 1px solid var(--color-caution);
+  background: none;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--color-caution);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.chatLink:hover {
+  opacity: 0.88;
+}
+
+.chatLink:focus-visible {
+  outline: 2px solid var(--color-caution);
+  outline-offset: 4px;
+}
+
+.chatArrow {
+  flex-shrink: 0;
+  color: var(--color-caution);
+}
+
+.visual {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .visual {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: min(46%, 486px);
+    height: min(90%, 598px);
+    max-height: 598px;
+    pointer-events: none;
+  }
+
+  .portrait {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .portraitImg {
+    object-fit: contain;
+    object-position: right center;
+  }
+}
+
+@media (max-width: 1023px) {
+  .block {
+    padding: var(--space-4);
+  }
+
+  .main {
+    gap: var(--space-5);
+  }
+
+  .formRow {
+    max-width: 100%;
+  }
+
+  .title {
+    font-size: clamp(20px, 5.2vw, 28px);
+  }
+
+  .submit {
+    min-height: 54px;
+    font-size: 17px;
+  }
+
+  .contactSection {
+    margin-top: var(--space-5);
+  }
+
+  .contactLead {
+    font-size: clamp(17px, 4.5vw, 22px);
+  }
+
+  .contactText {
+    font-size: 16px;
+  }
+
+  .chatLink {
+    font-size: 16px;
+  }
+}

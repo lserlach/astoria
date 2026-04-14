@@ -1,0 +1,144 @@
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+  padding: var(--space-3);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-sm);
+  border: 0.5px solid var(--color-border-subtle);
+}
+
+.filtres {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.sortWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 32px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.sortText {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.sortChevron {
+  flex-shrink: 0;
+  color: var(--color-text);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.sortSelect {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.sortWrap:focus-within {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.filterRow {
+  gap: var(--space-1);
+  align-items: center;
+}
+
+.filterCaption {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.filterIconCharter {
+  flex-shrink: 0;
+  color: var(--color-accent);
+  pointer-events: none;
+}
+
+.filterIconHot {
+  flex-shrink: 0;
+  color: var(--color-caution);
+  pointer-events: none;
+}
+
+.viewIcons {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.viewIconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(37, 37, 37, 0.35);
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.viewIconBtn:hover {
+  color: var(--color-text);
+  background: rgba(77, 163, 255, 0.08);
+}
+
+.viewIconBtnActive {
+  color: var(--color-accent);
+}
+
+.viewIconBtnActive:hover {
+  color: var(--color-accent);
+}
+
+.viewIconBtn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+  .bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filtres {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .viewIcons {
+    align-self: flex-end;
+  }
+}

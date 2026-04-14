@@ -1,0 +1,77 @@
+/* Shared custom checkbox / radio: blue fill, white mark (not system controls) */
+
+.choice {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  cursor: pointer;
+}
+
+.input {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.checkVisual,
+.radioVisual {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  box-sizing: border-box;
+  border: 2px solid rgba(37, 37, 37, 0.35);
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.checkVisual {
+  border-radius: 6px;
+}
+
+.radioVisual {
+  border-radius: 50%;
+}
+
+.choice:focus-within .checkVisual,
+.choice:focus-within .radioVisual {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.input:checked + .checkVisual {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.input:checked + .checkVisual::after {
+  content: "";
+  width: 5px;
+  height: 9px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translate(-0.5px, -1px);
+}
+
+.input:checked + .radioVisual {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.input:checked + .radioVisual::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+}

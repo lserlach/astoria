@@ -1,0 +1,90 @@
+/* Figma 322:13627 — SEO banner */
+
+.section {
+  padding-block: 0;
+}
+
+.block {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius-footer);
+  min-height: min(320px, 52vw);
+}
+
+@media (min-width: 768px) {
+  .block {
+    min-height: 360px;
+  }
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.bgImage {
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+.bgOverlay {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.46) 0%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--space-6);
+  max-width: 100%;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(28px, 5vw, 54px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--color-text-inverse);
+}
+
+.text {
+  margin: 0;
+  width: 70%;
+  max-width: 100%;
+  font-size: clamp(17px, 2.2vw, 24px);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--color-text-inverse);
+}
+
+@media (max-width: 1023px) {
+  .block {
+    min-height: min(200px, 48vw);
+  }
+
+  .content {
+    padding: var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .text {
+    width: 100%;
+  }
+}

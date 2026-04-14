@@ -1,0 +1,68 @@
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  /* Same inset on all sides of the white capsule */
+  padding: 8px;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-pill);
+}
+
+.link {
+  /* Equal padding inside each pill (incl. active blue) */
+  padding: 14px;
+  border-radius: var(--radius-pill);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.link:hover {
+  background: rgba(77, 163, 255, 0.12);
+}
+
+.active {
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
+}
+
+.active:hover {
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
+}
+
+/* Mobile drawer (desktop bar unchanged above) */
+.navDrawer {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-1);
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.linkDrawer {
+  display: block;
+  padding: var(--space-4);
+  border-radius: var(--radius-sm);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.linkDrawer:hover {
+  background: rgba(77, 163, 255, 0.1);
+}
+
+.activeDrawer {
+  background: rgba(77, 163, 255, 0.16);
+  font-weight: 600;
+}
