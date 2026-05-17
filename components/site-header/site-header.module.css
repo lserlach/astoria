@@ -28,13 +28,34 @@
 
 .logo {
   flex-shrink: 0;
-  font-size: 18px;
-  font-weight: 500;
-  color: var(--color-text-muted);
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+  text-decoration: none;
 }
 
-.logoOnDark {
-  color: rgba(245, 245, 245, 0.85);
+.logo:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.logoImg {
+  display: block;
+  /* Desktop main-nav capsule ≈ 64px tall (8+14+16-line+14+8); logo slightly larger for visual parity */
+  height: 80px;
+  width: auto;
+}
+
+@media (max-width: 1023px) {
+  .logoImg {
+    /* Burger 48px — logo a step above for balance */
+    height: 56px;
+  }
+}
+
+.logoOnDark .logoImg {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
 }
 
 .actions {

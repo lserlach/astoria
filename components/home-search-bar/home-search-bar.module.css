@@ -273,6 +273,92 @@
   text-align: center;
 }
 
+/* Search page: white primary row (Figma 69:24193) */
+.cellSearchDetails {
+  border-right: 0.5px solid rgba(37, 37, 37, 0.2);
+  background: var(--color-bg-secondary);
+}
+
+.cellSearchDetails .label {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(37, 37, 37, 0.4);
+}
+
+.cellSearchDetails .icon {
+  width: 20px;
+  height: 20px;
+  color: rgba(37, 37, 37, 0.4);
+}
+
+.cellSearchDetails .comboboxInput,
+.cellSearchDetails .selectValue {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.cellSearchDetails .selectValuePlaceholder {
+  font-weight: 500;
+}
+
+.cellSearchDetails .chevron {
+  color: var(--color-text);
+  opacity: 0.55;
+}
+
+/* Tour search: blue filter strip (second row) */
+.cellStrip {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  background: var(--color-accent);
+  border-right: 0.5px solid rgba(37, 37, 37, 0.25);
+}
+
+.cellStrip:last-of-type {
+  border-right: none;
+}
+
+.cellStrip .label {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #fffbfb;
+}
+
+.cellStrip .icon {
+  width: 24px;
+  height: 24px;
+  color: #fffbfb;
+}
+
+.cellStrip .cellSelectTrigger {
+  padding: 16px;
+  justify-content: center;
+}
+
+.cellStrip .cellSelectTrigger:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.cellStrip .cellSelectTrigger:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.85);
+  outline-offset: -2px;
+}
+
+.cellStripHideValue .valueRow {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* Search page: primary row on accent (Figma search details) */
 .cellInverse {
   border-right-color: var(--color-border-inverse-subtle);

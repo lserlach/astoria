@@ -1,5 +1,16 @@
 export type SortOption = "price_asc" | "price_desc" | "rating_desc" | "date_asc";
 
+/** Figma 153:19184 — colored promo tags on search result card */
+export type TourFeatureTagTone = "green" | "teal" | "blue" | "gold";
+
+export interface TourFeatureTag {
+  label: string;
+  tone: TourFeatureTagTone;
+}
+
+/** Round amenity icons row on tour result card */
+export type TourCardAmenityId = "balcony" | "wifi" | "airCon" | "kitchen";
+
 export interface Tour {
   id: string;
   hotelName: string;
@@ -19,6 +30,14 @@ export interface Tour {
   imageUrl: string;
   /** Extra photos for result-card hover gallery (optional; defaults to `imageUrl` only). */
   galleryImageUrls?: string[];
+  /** Optional top-left pill on gallery (e.g. «Хит продаж»). If unset and `isHot`, shows «горящий». */
+  imageBadgeLabel?: string;
+  /** e.g. «500 м до моря» */
+  distanceLabel?: string;
+  /** Colored tags: «Отдых с детьми», «VIP», … */
+  featureTags?: TourFeatureTag[];
+  /** Icons in grey circles */
+  amenities?: TourCardAmenityId[];
 }
 
 export interface Hotel {

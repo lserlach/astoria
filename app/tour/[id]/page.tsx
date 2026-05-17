@@ -15,10 +15,10 @@ export async function generateMetadata({ params }: TourPageProps) {
   const { id } = await params;
   const data = await getTourDetail(id);
   if (!data) {
-    return { title: "Тур — Астория" };
+    return { title: "Тур — Click Travel" };
   }
   return {
-    title: `Тур в ${data.tour.hotelName} — Астория`,
+    title: `Тур в ${data.tour.hotelName} — Click Travel`,
     description: `${data.tour.locationLabel}. ${data.tour.nights} ночей, от ${data.tour.priceFrom.toLocaleString("ru-RU")} ₽.`,
   };
 }

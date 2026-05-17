@@ -120,12 +120,27 @@
   height: 32px;
   padding: var(--space-2);
   border-radius: var(--radius-pill);
-  background: var(--color-rating);
   color: var(--color-text-inverse);
   font-size: 16px;
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.01em;
+}
+
+.ratingTier45 {
+  background: #4bdc4b;
+}
+
+.ratingTier4 {
+  background: #5cb85c;
+}
+
+.ratingTier35 {
+  background: #e6b661;
+}
+
+.ratingTier3 {
+  background: #e07a55;
 }
 
 .stars {

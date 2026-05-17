@@ -5,7 +5,7 @@ import {
   CaretDown,
   FadersHorizontal,
   ForkKnife,
-  Globe,
+  GlobeHemisphereWest,
   MagnifyingGlass,
   MapPin,
   Moon,
@@ -65,8 +65,11 @@ export function SearchDetailsBar({
   const searchParams = useSearchParams();
   const queryKey = searchParams.toString();
 
+  const tab = useSearchStore((s) => s.tab);
   const filters = useSearchStore((s) => s.filters);
   const patch = useSearchStore((s) => s.patchFilters);
+
+  const isTourSearch = tab === "tours";
 
   const [range, setRange] = useState<{
     start: Date | null;
@@ -105,189 +108,211 @@ export function SearchDetailsBar({
     [],
   );
 
-  const iconPanel = iconPrimary;
+  const iconStrip = useMemo(
+    () => ({
+      className: barStyles.icon,
+      size: 24,
+      weight: "regular" as const,
+      "aria-hidden": true as const,
+    }),
+    [],
+  );
+
+  const primaryCell = barStyles.cellSearchDetails;
 
   const noopTertiary = useCallback(() => {
     /* Prototype: open filter drawers later */
   }, []);
 
+  const searchCtaLabel = isTourSearch ? "Найти туры" : "Найти отели";
+
   return (
     <div className={styles.card}>
-      <div className={styles.primaryRow}>
-        <SearchComboboxCell
-          inverse
-          icon={<MapPin {...iconPrimary} />}
-          labelText="Город вылета"
-          value={filters.departureCity}
-          onChange={(v) => patch({ departureCity: v })}
-          options={CITY_OPTIONS}
-          ariaLabel="Город вылета, откуда"
-          searchPlaceholder="Откуда"
-        />
-
-        <SearchComboboxCell
-          inverse
-          icon={<Globe {...iconPrimary} />}
-          labelText="Страна/Курорт"
-          value={filters.countryOrResort}
-          onChange={(v) => patch({ countryOrResort: v })}
-          options={DESTINATION_OPTIONS}
-          ariaLabel="Страна или курорт, куда"
-          searchPlaceholder="Куда"
-        />
-
-        <SearchDateRangePicker
-          inverse
-          wrapperClassName={`${barStyles.cell} ${barStyles.cellDates} ${barStyles.cellSelect} ${barStyles.cellInverse}`}
-          rangeStart={range.start}
-          rangeEnd={range.end}
-          onRangeChange={(start, end) => setRange({ start, end })}
-          dateLabel={dateLabel}
-          dateUnset={!range.start || !range.end}
-          labelIconProps={iconPrimary}
-        />
-
-        <SearchSelectCell
-          inverse
-          icon={<Moon {...iconPrimary} />}
-          labelText="Кол-во ночей"
-          value={filters.nights}
-          onChange={(n) => patch({ nights: n })}
-          options={NIGHTS.map((n) => ({ value: n, label: String(n) }))}
-          ariaLabel="Количество ночей"
-        />
-
-        <SearchSelectCell
-          inverse
-          icon={<User {...iconPrimary} />}
-          labelText="Кол-во туристов"
-          value={filters.adults}
-          onChange={(n) => patch({ adults: n })}
-          options={[1, 2, 3, 4].map((n) => ({
-            value: n,
-            label: `${n} взрослых`,
-          }))}
-          ariaLabel="Количество взрослых"
-        />
-      </div>
-
       <div
-        className={`${styles.secondaryRow} ${!filters.advancedBarExpanded ? styles.secondaryRowRoundedBottom : ""}`.trim()}
+        className={`${styles.topCluster} ${isTourSearch ? styles.topClusterWithStrip : styles.topClusterBaseOnly}`.trim()}
       >
-        <SearchSelectCell<string>
-          icon={<Star {...iconPanel} />}
-          labelText="Класс отеля"
-          value={filters.hotelStars === null ? "" : String(filters.hotelStars)}
-          onChange={(v) =>
-            patch({ hotelStars: v === "" ? null : Number(v) })
-          }
-          options={STARS}
-          ariaLabel="Класс отеля"
-          cellClass={barStyles.cellPanel}
-        />
-
-        <SearchSelectCell<string>
-          icon={<Building {...iconPanel} />}
-          labelText="Тип отеля"
-          value={filters.hotelType}
-          onChange={(v) => patch({ hotelType: v })}
-          options={HOTEL_TYPES.map((t) => ({ value: t, label: t }))}
-          ariaLabel="Тип отеля"
-          cellClass={barStyles.cellPanel}
-        />
-
-        <SearchSelectCell<string>
-          icon={<ForkKnife {...iconPanel} />}
-          labelText="Питание"
-          value={filters.mealType}
-          onChange={(v) => patch({ mealType: v })}
-          options={MEALS.map((m) => ({ value: m, label: m }))}
-          ariaLabel="Тип питания"
-          cellClass={barStyles.cellPanel}
-        />
-
-        <SearchSelectCell<string>
-          icon={<TrendUp {...iconPanel} />}
-          labelText="Рейтинг"
-          value={filters.ratingMin === null ? "" : String(filters.ratingMin)}
-          onChange={(v) =>
-            patch({ ratingMin: v === "" ? null : Number(v) })
-          }
-          options={RATINGS}
-          ariaLabel="Минимальный рейтинг"
-          cellClass={barStyles.cellPanel}
-        />
-
         <div
-          className={`${barStyles.cell} ${barStyles.cellSelect} ${barStyles.cellPanel}`.trim()}
+          className={`${styles.primaryRow} ${isTourSearch ? "" : styles.primaryRowRoundedBottom}`.trim()}
         >
-          <div
-            className={styles.advancedToggle}
-            role="group"
-            aria-label="Расширенные параметры поиска"
-          >
-            <span className={styles.advancedToggleLabel}>
-              <FadersHorizontal {...iconPanel} />
-              <span className={barStyles.label}>Расширенные</span>
-            </span>
-            <div className={styles.advancedSeg}>
-              <button
-                type="button"
-                className={`${styles.advancedSegBtn} ${!filters.advancedBarExpanded ? styles.advancedSegBtnActive : ""}`.trim()}
-                aria-pressed={!filters.advancedBarExpanded}
-                onClick={() => patch({ advancedBarExpanded: false })}
-              >
-                Нет
-              </button>
-              <button
-                type="button"
-                className={`${styles.advancedSegBtn} ${filters.advancedBarExpanded ? styles.advancedSegBtnActive : ""}`.trim()}
-                aria-pressed={filters.advancedBarExpanded}
-                onClick={() => patch({ advancedBarExpanded: true })}
-              >
-                Да
-              </button>
-            </div>
+          <SearchComboboxCell
+            icon={<MapPin {...iconPrimary} />}
+            labelText="Город вылета"
+            value={filters.departureCity}
+            onChange={(v) => patch({ departureCity: v })}
+            options={CITY_OPTIONS}
+            ariaLabel="Город вылета, откуда"
+            searchPlaceholder="Откуда"
+            cellClass={primaryCell}
+          />
+
+          <SearchComboboxCell
+            icon={<GlobeHemisphereWest {...iconPrimary} />}
+            labelText="Страна/Курорт"
+            value={filters.countryOrResort}
+            onChange={(v) => patch({ countryOrResort: v })}
+            options={DESTINATION_OPTIONS}
+            ariaLabel="Страна или курорт, куда"
+            searchPlaceholder="Куда"
+            cellClass={primaryCell}
+          />
+
+          <SearchDateRangePicker
+            wrapperClassName={`${barStyles.cell} ${barStyles.cellDates} ${barStyles.cellSelect} ${primaryCell}`.trim()}
+            rangeStart={range.start}
+            rangeEnd={range.end}
+            onRangeChange={(start, end) => setRange({ start, end })}
+            dateLabel={dateLabel}
+            dateUnset={!range.start || !range.end}
+            searchDetailsStyle
+            labelIconProps={iconPrimary}
+          />
+
+          <SearchSelectCell
+            icon={<Moon {...iconPrimary} />}
+            labelText="Кол-во ночей"
+            value={filters.nights}
+            onChange={(n) => patch({ nights: n })}
+            options={NIGHTS.map((n) => ({ value: n, label: String(n) }))}
+            ariaLabel="Количество ночей"
+            cellClass={primaryCell}
+          />
+
+          <SearchSelectCell
+            icon={<User {...iconPrimary} />}
+            labelText="Кол-во туристов"
+            value={filters.adults}
+            onChange={(n) => patch({ adults: n })}
+            options={[1, 2, 3, 4].map((n) => ({
+              value: n,
+              label: `${n} взрослых`,
+            }))}
+            ariaLabel="Количество взрослых"
+            cellClass={primaryCell}
+          />
+
+          <div className={styles.searchBtnSlot}>
+            <button
+              type="button"
+              className={styles.findBtn}
+              disabled={loading}
+              aria-busy={loading}
+              onClick={() => void onSearch()}
+            >
+              {loading ? (
+                <span className={styles.spinner} aria-hidden />
+              ) : (
+                <MagnifyingGlass
+                  className={styles.findBtnIcon}
+                  size={16}
+                  weight="regular"
+                  aria-hidden
+                />
+              )}
+              {searchCtaLabel}
+            </button>
           </div>
         </div>
-      </div>
 
-      {filters.advancedBarExpanded ? (
-        <div className={styles.tertiaryRow}>
-          <button
-            type="button"
-            className={styles.tertiaryCell}
-            onClick={noopTertiary}
+        {isTourSearch ? (
+          <div
+            className={`${styles.filterStrip} ${!filters.advancedBarExpanded ? styles.filterStripRoundedBottom : ""}`.trim()}
           >
-            В номере
-            <CaretDown className={styles.tertiaryChevron} aria-hidden />
-          </button>
-          <button
-            type="button"
-            className={styles.tertiaryCell}
-            onClick={noopTertiary}
-          >
-            Пляж и расположение
-            <CaretDown className={styles.tertiaryChevron} aria-hidden />
-          </button>
-          <button
-            type="button"
-            className={styles.tertiaryCell}
-            onClick={noopTertiary}
-          >
-            Туроператоры
-            <CaretDown className={styles.tertiaryChevron} aria-hidden />
-          </button>
-          <button
-            type="button"
-            className={styles.tertiaryCell}
-            onClick={noopTertiary}
-          >
-            Бюджет
-            <SlidersHorizontal className={styles.budgetIcon} aria-hidden />
-          </button>
-        </div>
-      ) : null}
+            <SearchSelectCell<string>
+              strip
+              icon={<Star {...iconStrip} />}
+              labelText="Класс отеля"
+              value={filters.hotelStars === null ? "" : String(filters.hotelStars)}
+              onChange={(v) =>
+                patch({ hotelStars: v === "" ? null : Number(v) })
+              }
+              options={STARS}
+              ariaLabel="Класс отеля"
+            />
+
+            <SearchSelectCell<string>
+              strip
+              icon={<ForkKnife {...iconStrip} />}
+              labelText="Питание"
+              value={filters.mealType}
+              onChange={(v) => patch({ mealType: v })}
+              options={MEALS.map((m) => ({ value: m, label: m }))}
+              ariaLabel="Тип питания"
+            />
+
+            <SearchSelectCell<string>
+              strip
+              icon={<TrendUp {...iconStrip} />}
+              labelText="Рейтинг"
+              value={filters.ratingMin === null ? "" : String(filters.ratingMin)}
+              onChange={(v) =>
+                patch({ ratingMin: v === "" ? null : Number(v) })
+              }
+              options={RATINGS}
+              ariaLabel="Минимальный рейтинг"
+            />
+
+            <SearchSelectCell<string>
+              strip
+              icon={<Building {...iconStrip} />}
+              labelText="Тип отеля"
+              value={filters.hotelType}
+              onChange={(v) => patch({ hotelType: v })}
+              options={HOTEL_TYPES.map((t) => ({ value: t, label: t }))}
+              ariaLabel="Тип отеля"
+            />
+
+            <button
+              type="button"
+              className={styles.stripAdvanced}
+              aria-pressed={filters.advancedBarExpanded}
+              aria-label="Расширенные параметры поиска"
+              onClick={() =>
+                patch({ advancedBarExpanded: !filters.advancedBarExpanded })
+              }
+            >
+              <FadersHorizontal {...iconStrip} />
+              <span className={styles.stripAdvancedLabel}>Расширенные</span>
+            </button>
+          </div>
+        ) : null}
+
+        {isTourSearch && filters.advancedBarExpanded ? (
+          <div className={styles.tertiaryRow}>
+            <button
+              type="button"
+              className={styles.tertiaryCell}
+              onClick={noopTertiary}
+            >
+              В номере
+              <CaretDown className={styles.tertiaryChevron} aria-hidden />
+            </button>
+            <button
+              type="button"
+              className={styles.tertiaryCell}
+              onClick={noopTertiary}
+            >
+              Пляж и расположение
+              <CaretDown className={styles.tertiaryChevron} aria-hidden />
+            </button>
+            <button
+              type="button"
+              className={styles.tertiaryCell}
+              onClick={noopTertiary}
+            >
+              Туроператоры
+              <CaretDown className={styles.tertiaryChevron} aria-hidden />
+            </button>
+            <button
+              type="button"
+              className={styles.tertiaryCell}
+              onClick={noopTertiary}
+            >
+              Бюджет
+              <SlidersHorizontal className={styles.budgetIcon} aria-hidden />
+            </button>
+          </div>
+        ) : null}
+      </div>
 
       <div className={styles.footer}>
         <label
@@ -302,25 +327,6 @@ export function SearchDetailsBar({
           <span className={choiceStyles.checkVisual} aria-hidden />
           <span>Гарантия мест в отеле</span>
         </label>
-        <button
-          type="button"
-          className={styles.findBtn}
-          disabled={loading}
-          aria-busy={loading}
-          onClick={() => void onSearch()}
-        >
-          {loading ? (
-            <span className={styles.spinner} aria-hidden />
-          ) : (
-            <MagnifyingGlass
-              className={styles.findBtnIcon}
-              size={24}
-              weight="regular"
-              aria-hidden
-            />
-          )}
-          Найти туры
-        </button>
       </div>
     </div>
   );

@@ -6,22 +6,28 @@ import {
   CalendarBlank,
   CaretCircleLeft,
   CaretCircleRight,
-  Dresser,
+  CaretDown,
+  CookingPot,
   Flame,
   ForkKnife,
-  MapPin,
-  Moon,
-  Plus,
+  House,
+  Snowflake,
   Star,
   Users,
+  WifiHigh,
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 
-import type { Tour } from "@/lib/api/types";
+import type {
+  Tour,
+  TourCardAmenityId,
+  TourFeatureTagTone,
+} from "@/lib/api/types";
+import { ratingToBadgeTierKey } from "@/lib/rating-badge-tier";
 
-import { buildTourOfferVariants } from "./tour-offer-variants";
+import { buildTourRoomSections } from "./tour-offer-variants";
 import styles from "./tour-result-card.module.css";
 
 interface TourResultCardProps {
@@ -29,16 +35,62 @@ interface TourResultCardProps {
   layout?: "list" | "grid";
 }
 
-const variantIconProps = {
-  size: 24,
+const accentIconClass = styles.accentIcon;
+
+const offerIconCalendar = {
+  size: 20,
   weight: "regular" as const,
-  className: styles.variantIcon,
+  className: styles.offerGlyph,
   "aria-hidden": true as const,
 };
 
-const accentIconClass = styles.accentIcon;
+const offerIconRow = {
+  size: 24,
+  weight: "regular" as const,
+  className: styles.offerGlyph,
+  "aria-hidden": true as const,
+};
 
-const NAV_ICON_SIZE = 32;
+const NAV_ICON_SIZE = 48;
+
+const RATING_TIER_CLASS = {
+  "45": styles.ratingTier45,
+  "4": styles.ratingTier4,
+  "35": styles.ratingTier35,
+  "3": styles.ratingTier3,
+} as const;
+
+function AmenityIcon({ id }: { id: TourCardAmenityId }) {
+  const c = styles.amenityGlyph;
+  const s = 25;
+  switch (id) {
+    case "balcony":
+      return <House className={c} size={s} weight="regular" aria-hidden />;
+    case "wifi":
+      return <WifiHigh className={c} size={s} weight="regular" aria-hidden />;
+    case "airCon":
+      return <Snowflake className={c} size={s} weight="regular" aria-hidden />;
+    case "kitchen":
+      return <CookingPot className={c} size={s} weight="regular" aria-hidden />;
+    default:
+      return null;
+  }
+}
+
+function featureTagClass(tone: TourFeatureTagTone) {
+  switch (tone) {
+    case "green":
+      return styles.tagGreen;
+    case "teal":
+      return styles.tagTeal;
+    case "blue":
+      return styles.tagBlue;
+    case "gold":
+      return styles.tagGold;
+    default:
+      return styles.tagGreen;
+  }
+}
 
 export function TourResultCard({
   tour,
@@ -46,9 +98,25 @@ export function TourResultCard({
 }: TourResultCardProps) {
   const [expanded, setExpanded] = useState(false);
   const [galleryIndex, setGalleryIndex] = useState(0);
+  const [openRoomId, setOpenRoomId] = useState("");
   const mediaRef = useRef<HTMLDivElement>(null);
-  const variants = useMemo(() => buildTourOfferVariants(tour), [tour]);
+  const roomSections = useMemo(() => buildTourRoomSections(tour), [tour]);
+  const fallbackRoomId = useMemo(
+    () =>
+      roomSections.find((r) => r.offers.length > 0)?.id ??
+      roomSections[0]?.id ??
+      "",
+    [roomSections],
+  );
   const detailsId = useId();
+
+  useEffect(() => {
+    if (!expanded) {
+      setOpenRoomId("");
+      return;
+    }
+    setOpenRoomId(fallbackRoomId);
+  }, [expanded, tour.id, fallbackRoomId]);
 
   const galleryImages = useMemo(() => {
     const extra = tour.galleryImageUrls;
@@ -133,7 +201,9 @@ export function TourResultCard({
               sizes="(max-width: 768px) 100vw, 440px"
             />
             <div className={styles.mediaOverlay} />
-            {tour.isHot ? (
+            {tour.imageBadgeLabel ? (
+              <span className={styles.badgeHit}>{tour.imageBadgeLabel}</span>
+            ) : tour.isHot ? (
               <span className={styles.hot}>
                 <Flame size={24} weight="regular" aria-hidden />
                 горящий
@@ -174,7 +244,7 @@ export function TourResultCard({
             <div className={styles.titleBlock}>
               <div className={styles.titleRow}>
                 <span
-                  className={styles.ratingBadge}
+                  className={`${styles.ratingBadge} ${RATING_TIER_CLASS[ratingToBadgeTierKey(tour.rating)]}`.trim()}
                   aria-label={`Рейтинг ${tour.rating}`}
                 >
                   {tour.rating.toFixed(1)}
@@ -189,46 +259,70 @@ export function TourResultCard({
                 {Array.from({ length: tour.stars }).map((_, i) => (
                   <Star
                     key={i}
-                    size={24}
+                    size={18}
                     weight="fill"
                     className={styles.starIcon}
                   />
                 ))}
               </div>
             </div>
-            <div className={styles.meta}>
-              <div className={styles.metaRow}>
-                <MapPin
-                  className={accentIconClass}
-                  size={24}
-                  weight="regular"
+            <p className={styles.locationLine}>{tour.locationLabel}</p>
+            {tour.distanceLabel ? (
+              <div className={styles.distanceRow}>
+                <Image
+                  src="/images/tour/distance-sea-waves.png"
+                  alt=""
+                  width={25}
+                  height={25}
+                  className={styles.distanceIcon}
                   aria-hidden
                 />
-                <span>{tour.locationLabel}</span>
+                <span>{tour.distanceLabel}</span>
               </div>
-              <div className={styles.metaRow}>
-                <CalendarBlank
-                  className={accentIconClass}
-                  size={24}
-                  weight="regular"
-                  aria-hidden
-                />
-                <span>{tour.dateLabel}</span>
-              </div>
-              <div className={styles.metaRow}>
-                <ForkKnife
-                  className={accentIconClass}
-                  size={24}
-                  weight="regular"
-                  aria-hidden
-                />
-                <span>{tour.mealType}</span>
-              </div>
-            </div>
+            ) : null}
+            {tour.featureTags && tour.featureTags.length > 0 ? (
+              <ul className={styles.tagRow}>
+                {tour.featureTags.map((tag) => (
+                  <li
+                    key={tag.label}
+                    className={`${styles.featureTag} ${featureTagClass(tag.tone)}`.trim()}
+                  >
+                    {tag.label}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            {tour.amenities && tour.amenities.length > 0 ? (
+              <ul className={styles.amenityRow}>
+                {tour.amenities.map((id) => (
+                  <li key={id} className={styles.amenityChip}>
+                    <AmenityIcon id={id} />
+                  </li>
+                ))}
+              </ul>
+            ) : null}
           </div>
         </div>
         <div className={styles.side}>
           <div className={styles.sideMeta}>
+            <div className={styles.sideRow}>
+              <Building
+                className={accentIconClass}
+                size={24}
+                weight="regular"
+                aria-hidden
+              />
+              <span>{tour.roomType}</span>
+            </div>
+            <div className={styles.sideRow}>
+              <ForkKnife
+                className={accentIconClass}
+                size={24}
+                weight="regular"
+                aria-hidden
+              />
+              <span>{tour.mealType}</span>
+            </div>
             <div className={styles.sideRow}>
               <AirplaneTilt
                 className={accentIconClass}
@@ -241,15 +335,6 @@ export function TourResultCard({
               </span>
             </div>
             <div className={styles.sideRow}>
-              <Building
-                className={accentIconClass}
-                size={24}
-                weight="regular"
-                aria-hidden
-              />
-              <span>{tour.roomType}</span>
-            </div>
-            <div className={styles.sideRow}>
               <Users
                 className={accentIconClass}
                 size={24}
@@ -260,23 +345,19 @@ export function TourResultCard({
             </div>
           </div>
           <div className={styles.priceBlock}>
-            <p className={styles.price}>
-              от {tour.priceFrom.toLocaleString("ru-RU")} ₽
-            </p>
             <button
               type="button"
-              className={styles.more}
+              className={styles.pricePill}
               aria-expanded={expanded}
               aria-controls={detailsId}
+              aria-label={
+                expanded
+                  ? "Скрыть варианты размещения и даты"
+                  : `Показать варианты размещения и даты, от ${tour.priceFrom.toLocaleString("ru-RU")} ₽`
+              }
               onClick={() => setExpanded((v) => !v)}
             >
-              подробнее
-              <Plus
-                className={`${styles.plusIcon} ${expanded ? styles.plusIconOpen : ""}`.trim()}
-                size={24}
-                weight="regular"
-                aria-hidden
-              />
+              от {tour.priceFrom.toLocaleString("ru-RU")} ₽
             </button>
           </div>
         </div>
@@ -285,50 +366,97 @@ export function TourResultCard({
       {expanded ? (
         <div
           id={detailsId}
-          className={styles.variants}
+          className={styles.details}
           role="region"
           aria-label="Варианты размещения и даты"
         >
-          {variants.map((v) => (
-            <div key={v.id} className={styles.variantRow}>
-              <div className={styles.variantField}>
-                <div className={styles.variantLabelRow}>
-                  <CalendarBlank {...variantIconProps} />
-                  <span className={styles.variantLabel}>Дата поездки</span>
+          <div className={styles.roomAccordion}>
+            {roomSections.map((room) => {
+              const isOpen =
+                (openRoomId || fallbackRoomId) === room.id;
+              return (
+                <div key={room.id} className={styles.roomSection}>
+                  <button
+                    type="button"
+                    className={styles.roomBar}
+                    aria-expanded={isOpen}
+                    onClick={() => setOpenRoomId(room.id)}
+                  >
+                    <span className={styles.roomBarMain}>
+                      <span className={styles.roomThumb}>
+                        <Image
+                          src={room.imageUrl}
+                          alt=""
+                          fill
+                          className={styles.roomThumbImg}
+                          sizes="64px"
+                        />
+                      </span>
+                      <span className={styles.roomTitle}>{room.title}</span>
+                    </span>
+                    <span className={styles.roomBarMeta}>
+                      <span className={styles.roomBarPrice}>
+                        {room.headerPriceRub.toLocaleString("ru-RU")} ₽
+                      </span>
+                      <CaretDown
+                        className={`${styles.roomCaret} ${isOpen ? styles.roomCaretOpen : ""}`.trim()}
+                        size={24}
+                        weight="regular"
+                        aria-hidden
+                      />
+                    </span>
+                  </button>
+                  {isOpen && room.offers.length > 0 ? (
+                    <div className={styles.offerList}>
+                      {room.offers.map((row) => (
+                        <div key={row.id} className={styles.offerRow}>
+                          <div className={styles.offerCol}>
+                            <div className={styles.offerLine}>
+                              <CalendarBlank {...offerIconCalendar} />
+                              <span className={styles.offerDate}>
+                                {row.dateLine}
+                              </span>
+                            </div>
+                            <div className={styles.offerLine}>
+                              <AirplaneTilt {...offerIconRow} />
+                              <span className={styles.offerMuted}>
+                                {row.flightLabel}
+                              </span>
+                            </div>
+                          </div>
+                          <div className={styles.offerCol}>
+                            <div className={styles.offerLine}>
+                              <Users {...offerIconRow} />
+                              <span className={styles.offerMuted}>
+                                {row.guestsLine}
+                              </span>
+                            </div>
+                            <div className={styles.offerLine}>
+                              <ForkKnife {...offerIconRow} />
+                              <span className={styles.offerMeal}>
+                                {row.mealLine}
+                              </span>
+                            </div>
+                          </div>
+                          <div className={styles.offerColActions}>
+                            <p className={styles.offerRoomSpec}>
+                              {row.roomSpecLine}
+                            </p>
+                            <button
+                              type="button"
+                              className={styles.offerPriceBtn}
+                            >
+                              {row.priceRub.toLocaleString("ru-RU")} ₽
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
                 </div>
-                <p className={styles.variantValue}>{v.dateRangeLabel}</p>
-              </div>
-              <div className={styles.variantField}>
-                <div className={styles.variantLabelRow}>
-                  <Dresser {...variantIconProps} />
-                  <span className={styles.variantLabel}>Номер</span>
-                </div>
-                <p className={styles.variantValue}>{v.roomLabel}</p>
-              </div>
-              <div className={styles.variantField}>
-                <div className={styles.variantLabelRow}>
-                  <Moon {...variantIconProps} />
-                  <span className={styles.variantLabel}>Ночей</span>
-                </div>
-                <p className={styles.variantValue}>{v.nightsLabel}</p>
-              </div>
-              <div className={styles.variantField}>
-                <div className={styles.variantLabelRow}>
-                  <ForkKnife {...variantIconProps} />
-                  <span className={styles.variantLabel}>Питание</span>
-                </div>
-                <p className={styles.variantValue}>{v.mealLabel}</p>
-              </div>
-              <div className={styles.variantActions}>
-                <p className={styles.variantPrice}>
-                  {v.priceRub.toLocaleString("ru-RU")} ₽
-                </p>
-                <button type="button" className={styles.variantCta}>
-                  Выбрать
-                </button>
-              </div>
-            </div>
-          ))}
+              );
+            })}
+          </div>
         </div>
       ) : null}
     </div>

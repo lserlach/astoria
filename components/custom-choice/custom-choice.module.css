@@ -8,6 +8,18 @@
   cursor: pointer;
 }
 
+/** Figma 69:23691 — filter sidebar: square controls, blue stroke */
+.choiceFilters .checkVisual,
+.choiceFilters .radioVisual {
+  border: 1px solid rgba(77, 163, 255, 0.5);
+  border-radius: 4px;
+  background: var(--color-bg-secondary);
+}
+
+.choiceFilters .radioVisual {
+  border-radius: 4px;
+}
+
 .input {
   position: absolute;
   left: 0;

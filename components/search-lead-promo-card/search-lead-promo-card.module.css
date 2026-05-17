@@ -1,0 +1,232 @@
+/* Figma 145:18409 — lead promo between hotel cards */
+
+.root {
+  min-width: 0;
+}
+
+.rootGrid {
+  grid-column: 1 / -1;
+}
+
+.block {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-footer);
+  background: var(--color-bg-secondary);
+  padding: var(--space-6);
+  box-sizing: border-box;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .block {
+    min-height: 400px;
+    padding-inline-end: min(44%, 520px);
+  }
+
+  .content {
+    max-width: 520px;
+  }
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(22px, 4vw, 32px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: stretch;
+  width: 100%;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .formRow {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  max-width: 320px;
+}
+
+.fieldName {
+  flex: 1 1 auto;
+}
+
+.fieldGrow {
+  flex: 1 1 auto;
+}
+
+@media (min-width: 640px) {
+  .field {
+    max-width: none;
+    width: auto;
+  }
+
+  .fieldName {
+    flex: 0 1 160px;
+    max-width: 200px;
+  }
+
+  .fieldGrow {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
+.label {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.input {
+  width: 100%;
+  height: 46px;
+  padding: var(--space-3);
+  box-sizing: border-box;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-secondary);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input::placeholder {
+  color: rgba(37, 37, 37, 0.6);
+}
+
+.input:focus,
+.input:focus-visible {
+  outline: none;
+  border-color: rgba(77, 163, 255, 0.55);
+  box-shadow: 0 0 0 2px rgba(77, 163, 255, 0.2);
+}
+
+.fieldError {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-caution);
+}
+
+.submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: var(--space-4) var(--space-5);
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-caution);
+  color: var(--color-text-inverse);
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.submit:hover {
+  opacity: 0.92;
+  filter: brightness(1.02);
+}
+
+.submit:focus-visible {
+  outline: 2px solid var(--color-caution);
+  outline-offset: 3px;
+}
+
+.visual {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .visual {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: min(46%, 486px);
+    height: min(90%, 598px);
+    max-height: 598px;
+    pointer-events: none;
+  }
+
+  .portrait {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .portraitImg {
+    object-fit: contain;
+    object-position: 86% center;
+    transform: translateX(-16px);
+  }
+}
+
+@media (max-width: 1023px) {
+  .block {
+    padding: var(--space-4);
+  }
+
+  .title {
+    font-size: clamp(20px, 5vw, 26px);
+  }
+
+  .submit {
+    min-height: 48px;
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 639px) {
+  .submit {
+    width: 100%;
+  }
+
+  .field {
+    max-width: none;
+  }
+}

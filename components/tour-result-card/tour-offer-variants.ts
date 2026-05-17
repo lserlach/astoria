@@ -1,38 +1,79 @@
 import type { Tour } from "@/lib/api/types";
 
-export interface TourOfferVariant {
+export interface TourOfferRow {
   id: string;
-  dateRangeLabel: string;
-  roomLabel: string;
-  nightsLabel: string;
-  mealLabel: string;
+  dateLine: string;
+  flightLabel: string;
+  guestsLine: string;
+  mealLine: string;
+  roomSpecLine: string;
   priceRub: number;
 }
 
-const ROOM_LABELS = [
-  "Standard garden view",
-  "Superior sea view",
-  "Family suite",
-  "Deluxe panoramic",
-  "Club room",
-];
-
-function travelDateRangeLabel(tour: Tour): string {
-  const trimmed = tour.dateLabel.replace(/\s*•\s*\d+\s*ночей\s*$/i, "").trim();
-  if (trimmed) {
-    return `${trimmed} • 28 дек`;
-  }
-  return tour.dateLabel;
+export interface TourRoomSection {
+  id: string;
+  title: string;
+  headerPriceRub: number;
+  imageUrl: string;
+  offers: TourOfferRow[];
 }
 
-/** Demo offers under «подробнее» (until API returns real variants). */
-export function buildTourOfferVariants(tour: Tour): TourOfferVariant[] {
-  return ROOM_LABELS.map((roomLabel, i) => ({
-    id: `${tour.id}-offer-${i}`,
-    dateRangeLabel: travelDateRangeLabel(tour),
-    roomLabel,
-    nightsLabel: `${tour.nights} ночей`,
-    mealLabel: tour.mealType,
-    priceRub: Math.round(tour.priceFrom * (2.6 + i * 0.32)),
+function formatDateLine(tour: Tour): string {
+  const m = tour.dateLabel.match(/^(.+?)\s*•\s*(\d+)/);
+  if (m) {
+    return `${m[1].trim()} / ${m[2]} нч`;
+  }
+  const head = tour.dateLabel.replace(/\s*•.*$/u, "").trim();
+  return `${head} / ${tour.nights} нч`;
+}
+
+function altDateLine(tour: Tour): string {
+  return `27 апреля / ${tour.nights + 3} нч`;
+}
+
+function formatMealLine(meal: string): string {
+  if (/all\s*inclusive|всё\s*включено|все\s*включено|\bai\b|uai|ultra/i.test(meal)) {
+    return "AI - Все Включено";
+  }
+  return meal;
+}
+
+/** Room accordion + offer table rows (Figma 216:18690). */
+export function buildTourRoomSections(tour: Tour): TourRoomSection[] {
+  const dateLine = formatDateLine(tour);
+  const flightLabel = tour.charter ? "Чартерный рейс" : "Регулярный рейс";
+  const mealLine = formatMealLine(tour.mealType);
+  const guestsLine = tour.guestsLabel;
+
+  const roomSpec =
+    "Standard / 23 м2, 1 комната, 1 спальня";
+
+  const standardOffers: TourOfferRow[] = [0, 1, 2].map((i) => ({
+    id: `${tour.id}-std-offer-${i}`,
+    dateLine: i === 2 ? altDateLine(tour) : dateLine,
+    flightLabel,
+    guestsLine,
+    mealLine,
+    roomSpecLine: roomSpec,
+    priceRub: Math.round(tour.priceFrom * (2.55 + i * 0.35)),
   }));
+
+  const headerPrice = Math.round(tour.priceFrom * 2.2);
+
+  return [
+    {
+      id: `${tour.id}-room-one`,
+      title: "One room",
+      headerPriceRub: headerPrice,
+      imageUrl: tour.imageUrl,
+      offers: [],
+    },
+    {
+      id: `${tour.id}-room-standard`,
+      title: "Standard",
+      headerPriceRub: headerPrice,
+      imageUrl: tour.galleryImageUrls?.[0] ?? tour.imageUrl,
+      offers: standardOffers,
+    },
+  ];
 }

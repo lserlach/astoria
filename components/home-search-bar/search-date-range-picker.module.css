@@ -303,6 +303,22 @@
   }
 }
 
+.pickerSearchDetails .labelRow svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: rgba(37, 37, 37, 0.4);
+}
+
+.pickerSearchDetails .label {
+  color: rgba(37, 37, 37, 0.4);
+}
+
+.pickerSearchDetails .dateValue {
+  font-size: 18px;
+  font-weight: 600;
+}
+
 .pickerInverse .labelRow svg {
   color: rgba(245, 245, 245, 0.95);
 }

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Container } from "@/components/container/container";
 import { HotelResultCard } from "@/components/hotel-result-card/hotel-result-card";
 import { SearchDetailsBar } from "@/components/search-details-bar/search-details-bar";
+import { SearchLeadPromoCard } from "@/components/search-lead-promo-card/search-lead-promo-card";
 import { SearchFiltersSidebar } from "@/components/search-filters-sidebar/search-filters-sidebar";
 import { SearchResultsToolbar } from "@/components/search-results-toolbar/search-results-toolbar";
 import { SiteFooter } from "@/components/site-footer/site-footer";
@@ -128,20 +129,52 @@ export function SearchPageClient() {
               className={`${styles.list} ${resultsView === "grid" ? styles.listGrid : ""} ${loading ? styles.listDimmed : ""}`.trim()}
             >
               {tab === "tours"
-                ? tours.map((t) => (
-                    <TourResultCard
-                      key={t.id}
-                      tour={t}
-                      layout={resultsView}
-                    />
-                  ))
-                : hotels.map((h) => (
-                    <HotelResultCard
-                      key={h.id}
-                      hotel={h}
-                      layout={resultsView}
-                    />
-                  ))}
+                ? tours.flatMap((t, i) => {
+                    const nodes = [
+                      <TourResultCard
+                        key={t.id}
+                        tour={t}
+                        layout={resultsView}
+                      />,
+                    ];
+                    const insertLeadPromo =
+                      (tours.length >= 3 && i === 2) ||
+                      (tours.length > 0 &&
+                        tours.length < 3 &&
+                        i === tours.length - 1);
+                    if (insertLeadPromo) {
+                      nodes.push(
+                        <SearchLeadPromoCard
+                          key="search-lead-promo"
+                          layout={resultsView}
+                        />,
+                      );
+                    }
+                    return nodes;
+                  })
+                : hotels.flatMap((h, i) => {
+                    const nodes = [
+                      <HotelResultCard
+                        key={h.id}
+                        hotel={h}
+                        layout={resultsView}
+                      />,
+                    ];
+                    const insertLeadPromo =
+                      (hotels.length >= 3 && i === 2) ||
+                      (hotels.length > 0 &&
+                        hotels.length < 3 &&
+                        i === hotels.length - 1);
+                    if (insertLeadPromo) {
+                      nodes.push(
+                        <SearchLeadPromoCard
+                          key="search-lead-promo"
+                          layout={resultsView}
+                        />,
+                      );
+                    }
+                    return nodes;
+                  })}
             </div>
             {!loading && tab === "tours" && tours.length === 0 ? (
               <p className={styles.empty}>По заданным параметрам туры не найдены.</p>

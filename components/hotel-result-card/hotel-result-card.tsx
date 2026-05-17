@@ -4,6 +4,7 @@ import { MapPin, Star } from "@phosphor-icons/react";
 import Image from "next/image";
 
 import type { Hotel } from "@/lib/api/types";
+import { ratingToBadgeTierKey } from "@/lib/rating-badge-tier";
 
 import styles from "./hotel-result-card.module.css";
 
@@ -11,6 +12,13 @@ interface HotelResultCardProps {
   hotel: Hotel;
   layout?: "list" | "grid";
 }
+
+const RATING_TIER_CLASS = {
+  "45": styles.ratingTier45,
+  "4": styles.ratingTier4,
+  "35": styles.ratingTier35,
+  "3": styles.ratingTier3,
+} as const;
 
 function mapsSearchUrl(hotel: Hotel) {
   const q = `${hotel.name} ${hotel.locationLabel}`.trim();
@@ -51,7 +59,10 @@ export function HotelResultCard({
           <div className={styles.titleBlock}>
             <div className={styles.titleRow}>
               <h3 className={styles.title}>{hotel.name}</h3>
-              <span className={styles.rating} aria-label={`Рейтинг ${hotel.rating}`}>
+              <span
+                className={`${styles.rating} ${RATING_TIER_CLASS[ratingToBadgeTierKey(hotel.rating)]}`.trim()}
+                aria-label={`Рейтинг ${hotel.rating}`}
+              >
                 {hotel.rating.toFixed(1)}
               </span>
             </div>

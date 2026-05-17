@@ -18,10 +18,10 @@ export async function generateMetadata({ params }: DirectionCountryRouteProps) {
   const { slug } = await params;
   const data = await getDirectionCountryMock(slug);
   if (!data) {
-    return { title: "Направление — Астория" };
+    return { title: "Направление — Click Travel" };
   }
   return {
-    title: `${data.seoTitle} — Астория`,
+    title: `${data.seoTitle} — Click Travel`,
     description: `${data.intro} Подборка отелей и туров в ${data.name}.`,
   };
 }

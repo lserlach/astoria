@@ -10,7 +10,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Астория — туры и отели",
+  title: "Click Travel — туры и отели",
   description: "Онлайн-подбор туров и отелей. Прототип интерфейса.",
 };
 

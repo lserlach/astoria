@@ -217,6 +217,8 @@ interface SearchDateRangePickerProps {
   dateUnset?: boolean;
   /** White-on-accent trigger (search page primary row). */
   inverse?: boolean;
+  /** Typography for search details white bar (Figma 69:24193). */
+  searchDetailsStyle?: boolean;
   labelIconProps: {
     className?: string;
     size: number;
@@ -233,6 +235,7 @@ export function SearchDateRangePicker({
   dateLabel,
   dateUnset = false,
   inverse = false,
+  searchDetailsStyle = false,
   labelIconProps,
 }: SearchDateRangePickerProps) {
   const [open, setOpen] = useState(false);
@@ -303,7 +306,7 @@ export function SearchDateRangePicker({
   return (
     <div
       ref={rootRef}
-      className={`${wrapperClassName} ${styles.pickerRoot} ${inverse ? styles.pickerInverse : ""}`.trim()}
+      className={`${wrapperClassName} ${styles.pickerRoot} ${inverse ? styles.pickerInverse : ""} ${searchDetailsStyle ? styles.pickerSearchDetails : ""}`.trim()}
     >
       <button
         type="button"

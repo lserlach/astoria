@@ -59,7 +59,7 @@ function FilterSection({
   onToggle,
   children,
 }: {
-  title: string;
+  title: ReactNode;
   open: boolean;
   onToggle: () => void;
   children: ReactNode;
@@ -75,7 +75,7 @@ function FilterSection({
         <span className={styles.sectionTitle}>{title}</span>
         <CaretDown
           className={`${styles.sectionChevron} ${open ? styles.sectionChevronOpen : ""}`.trim()}
-          size={20}
+          size={24}
           weight="regular"
           aria-hidden
         />
@@ -130,11 +130,13 @@ export function SearchFiltersSidebar() {
     await runSearch();
   };
 
+  const choiceCls = `${choiceStyles.choice} ${choiceStyles.choiceFilters}`.trim();
+
   const starRow = useCallback(
     (count: 3 | 4 | 5, flag: "stars3" | "stars4" | "stars5") => (
       <label
         key={flag}
-        className={`${styles.optionRow} ${choiceStyles.choice}`.trim()}
+        className={`${styles.optionRow} ${choiceCls}`.trim()}
       >
         <input
           type="checkbox"
@@ -148,7 +150,7 @@ export function SearchFiltersSidebar() {
             <Star
               key={i}
               className={styles.starIcon}
-              size={20}
+              size={18}
               weight="fill"
               aria-hidden
             />
@@ -156,7 +158,7 @@ export function SearchFiltersSidebar() {
         </span>
       </label>
     ),
-    [filters, patch],
+    [choiceCls, filters, patch],
   );
 
   return (
@@ -172,9 +174,7 @@ export function SearchFiltersSidebar() {
           {starRow(3, "stars3")}
           {starRow(4, "stars4")}
           {starRow(5, "stars5")}
-          <label
-            className={`${styles.optionRow} ${choiceStyles.choice}`.trim()}
-          >
+          <label className={`${styles.optionRow} ${choiceCls}`.trim()}>
             <input
               type="checkbox"
               className={choiceStyles.input}
@@ -194,7 +194,7 @@ export function SearchFiltersSidebar() {
           {MEAL_OPTIONS.map((opt) => (
             <label
               key={opt.value}
-              className={`${styles.optionRow} ${choiceStyles.choice}`.trim()}
+              className={`${styles.optionRow} ${choiceCls}`.trim()}
             >
               <input
                 type="radio"
@@ -203,7 +203,7 @@ export function SearchFiltersSidebar() {
                 checked={filters.mealType === opt.value}
                 onChange={() => patch({ mealType: opt.value })}
               />
-              <span className={choiceStyles.radioVisual} aria-hidden />
+              <span className={choiceStyles.checkVisual} aria-hidden />
               <span className={styles.optionLabel}>{opt.label}</span>
             </label>
           ))}
@@ -217,7 +217,7 @@ export function SearchFiltersSidebar() {
           {RATING_ROWS.map((row) => (
             <label
               key={String(row.value)}
-              className={`${styles.optionRow} ${choiceStyles.choice}`.trim()}
+              className={`${styles.optionRow} ${choiceCls}`.trim()}
             >
               <input
                 type="radio"
@@ -230,7 +230,7 @@ export function SearchFiltersSidebar() {
                 }
                 onChange={() => patch({ ratingMin: row.value })}
               />
-              <span className={choiceStyles.radioVisual} aria-hidden />
+              <span className={choiceStyles.checkVisual} aria-hidden />
               {row.pillClass && row.pillText ? (
                 <>
                   <span className={row.pillClass}>{row.pillText}</span>
@@ -253,7 +253,7 @@ export function SearchFiltersSidebar() {
         <span>все фильтры</span>
         <ArrowRight
           className={`${styles.moreCaret} ${moreOpen ? styles.moreCaretOpen : ""}`.trim()}
-          size={20}
+          size={24}
           weight="regular"
           aria-hidden
         />
@@ -269,7 +269,7 @@ export function SearchFiltersSidebar() {
             {RESORTS_TR.map((r) => (
               <label
                 key={r}
-                className={`${styles.optionRow} ${choiceStyles.choice}`.trim()}
+                className={`${styles.optionRow} ${choiceCls}`.trim()}
               >
                 <input
                   type="checkbox"
@@ -284,12 +284,17 @@ export function SearchFiltersSidebar() {
           </FilterSection>
 
           <FilterSection
-            title="В номере"
+            title={
+              <span className={styles.sectionTitleSplit}>
+                <span className={styles.sectionTitleLead}>В </span>
+                <span className={styles.sectionTitleEm}>номере</span>
+              </span>
+            }
             open={secRoom}
             onToggle={() => setSecRoom((v) => !v)}
           >
             <label
-              className={`${styles.optionRow} ${choiceStyles.choice}`.trim()}
+              className={`${styles.optionRow} ${choiceCls}`.trim()}
             >
               <input
                 type="checkbox"
@@ -301,7 +306,7 @@ export function SearchFiltersSidebar() {
               <span className={styles.optionLabel}>Кондиционер</span>
             </label>
             <label
-              className={`${styles.optionRow} ${choiceStyles.choice}`.trim()}
+              className={`${styles.optionRow} ${choiceCls}`.trim()}
             >
               <input
                 type="checkbox"
@@ -313,7 +318,7 @@ export function SearchFiltersSidebar() {
               <span className={styles.optionLabel}>Кухня</span>
             </label>
             <label
-              className={`${styles.optionRow} ${choiceStyles.choice}`.trim()}
+              className={`${styles.optionRow} ${choiceCls}`.trim()}
             >
               <input
                 type="checkbox"
@@ -325,7 +330,7 @@ export function SearchFiltersSidebar() {
               <span className={styles.optionLabel}>Балкон</span>
             </label>
             <label
-              className={`${styles.optionRow} ${choiceStyles.choice}`.trim()}
+              className={`${styles.optionRow} ${choiceCls}`.trim()}
             >
               <input
                 type="checkbox"
@@ -344,7 +349,7 @@ export function SearchFiltersSidebar() {
             onToggle={() => setSecBeach((v) => !v)}
           >
             <label
-              className={`${styles.optionRow} ${choiceStyles.choice}`.trim()}
+              className={`${styles.optionRow} ${choiceCls}`.trim()}
             >
               <input
                 type="checkbox"
@@ -356,7 +361,7 @@ export function SearchFiltersSidebar() {
               <span className={styles.optionLabel}>Первая линия</span>
             </label>
             <label
-              className={`${styles.optionRow} ${choiceStyles.choice}`.trim()}
+              className={`${styles.optionRow} ${choiceCls}`.trim()}
             >
               <input
                 type="checkbox"
@@ -368,7 +373,7 @@ export function SearchFiltersSidebar() {
               <span className={styles.optionLabel}>Свой пляж</span>
             </label>
             <label
-              className={`${styles.optionRow} ${choiceStyles.choice}`.trim()}
+              className={`${styles.optionRow} ${choiceCls}`.trim()}
             >
               <input
                 type="checkbox"
@@ -380,7 +385,7 @@ export function SearchFiltersSidebar() {
               <span className={styles.optionLabel}>Песчаный пляж</span>
             </label>
             <label
-              className={`${styles.optionRow} ${choiceStyles.choice}`.trim()}
+              className={`${styles.optionRow} ${choiceCls}`.trim()}
             >
               <input
                 type="checkbox"
@@ -438,7 +443,7 @@ export function SearchFiltersSidebar() {
 
       <div className={styles.extras}>
         <label
-          className={`${styles.extraRow} ${choiceStyles.choice}`.trim()}
+          className={`${styles.extraRow} ${choiceCls}`.trim()}
         >
           <input
             type="checkbox"
@@ -456,7 +461,7 @@ export function SearchFiltersSidebar() {
           <span>Только чартерные рейсы</span>
         </label>
         <label
-          className={`${styles.extraRow} ${choiceStyles.choice}`.trim()}
+          className={`${styles.extraRow} ${choiceCls}`.trim()}
         >
           <input
             type="checkbox"

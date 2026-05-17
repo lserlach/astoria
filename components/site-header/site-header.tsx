@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { EnvelopeSimple, Phone, User } from "@phosphor-icons/react";
 
 import styles from "./site-header.module.css";
@@ -29,9 +31,20 @@ export function SiteHeader({
 
   return (
     <header className={headerClass}>
-      <span className={`${styles.logo} ${onDark ? styles.logoOnDark : ""}`.trim()}>
-        Астория
-      </span>
+      <Link
+        href="/"
+        className={`${styles.logo} ${onDark ? styles.logoOnDark : ""}`.trim()}
+        aria-label="Click Travel — на главную"
+      >
+        <Image
+          src="/images/brand/click-travel-logo.png"
+          alt="Click Travel"
+          width={163}
+          height={107}
+          className={styles.logoImg}
+          priority
+        />
+      </Link>
       {center ? (
         <div
           className={[styles.headerCenter, centerClassName ?? ""].filter(Boolean).join(" ")}

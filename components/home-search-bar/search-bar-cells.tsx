@@ -321,6 +321,8 @@ export interface SearchSelectCellProps<T extends SelectValue> {
   cellClass?: string;
   emptyLabel?: string;
   inverse?: boolean;
+  /** Blue strip row: icon + label only (Figma tour filters). */
+  strip?: boolean;
 }
 
 export function SearchSelectCell<T extends SelectValue>({
@@ -333,6 +335,7 @@ export function SearchSelectCell<T extends SelectValue>({
   cellClass,
   emptyLabel = "Выберите",
   inverse = false,
+  strip = false,
 }: SearchSelectCellProps<T>) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -372,7 +375,7 @@ export function SearchSelectCell<T extends SelectValue>({
   return (
     <div
       ref={rootRef}
-      className={`${styles.cell} ${styles.cellSelect} ${inverse ? styles.cellInverse : ""} ${cellClass ?? ""}`.trim()}
+      className={`${styles.cell} ${styles.cellSelect} ${inverse ? styles.cellInverse : ""} ${strip ? `${styles.cellStrip} ${styles.cellStripHideValue}` : ""} ${cellClass ?? ""}`.trim()}
     >
       <button
         type="button"
